@@ -1,16 +1,18 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
-import waifu
+from aiohttp import request
 import sys
 import random
 import asyncio
 import time
 import datetime
 import re
-import hello
-import meme
 import wikipedia
+import waifu
+import meme
+import hello
+import json
 
 client = discord.Client()
 
@@ -18,11 +20,11 @@ client = commands.Bot( command_prefix = 'f!')
 
 @client.event
 async def on_ready():
-    print('Мы вошли в систему как {0.user}'.format(client))
+    print('вы вошли в систему как {0.user}'.format(client))
 
     await client.change_presence( status = discord.Status.online, activity = discord.Game('f!main') )
 
-# меню команд
+# меню
 
 @client.command()
 async def main(ctx):
@@ -31,14 +33,14 @@ async def main(ctx):
 	embed.add_field(name="fate", value="Твоя вайфу из серии Fate.", inline=False)
 	embed.add_field(name="info", value="Информация о любом пользователе на этом сервере.", inline=False)
 	embed.add_field(name="clear", value="Для Админов и модераторов. Удаляет сообшения максимум 100.", inline=False)
-	embed.add_field(name="'none'", value="скоро", inline=False)
+	embed.add_field(name="wiki", value="поиск в wikipedia", inline=False)
 	embed.add_field(name="'none'", value="скоро", inline=False)
 	embed.add_field(name="'none'", value="скоро", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="скоро", inline=False)
-	embed.set_footer(text="Создатель EvilBit#6696",icon_url='https://cdn.discordapp.com/avatars/552479599980970005/47b3832de0ae7f146822b319921baba5.png?size=1024')
+	embed.set_footer(text="Создатель @EvilBit#6696",icon_url='https://cdn.discordapp.com/avatars/552479599980970005/bd0258cf2634b8426c7e175c0ea97ab7.png?size=1024')
 	await ctx.send(embed=embed)
 
 # информация о пользователе
@@ -56,7 +58,7 @@ async def info(ctx,member:discord.Member):
 # очистка сообшений для админов
 
 @client.command()
-@commands.has_permissions(view_audit_log=True)
+@commands.has_permissions(administrator = True)
 async def clear(ctx,amount=100):
   deleted = await ctx.message.channel.purge(limit=amount +1)
   author = ctx.message.author
@@ -86,6 +88,20 @@ async def on_member_join(member):
   
   await channel.send(embed=embed, content=None)
   
+@client.command()
+async def wiki(ctx, *, text):
+    wikipedia.set_lang("ru")
+    new_page = wikipedia.page(text)
+    summ = wikipedia.summary(text)
+    emb = discord.Embed(
+        title= new_page.title,
+        description= summ,
+         color=0xff80ff
+    )
+    emb.set_author(name= 'Wikipedia', url= new_page.url, icon_url= 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png')
+ 
+    await ctx.send(embed=emb)
+  
 # мем
 
 @client.command()
@@ -97,7 +113,7 @@ async def meme(ctx):
   
   await ctx.send(embed=embed, content=None)
  
-  await channel.send(embed=embed, content=None) 
+  await channel.send(embed=embed, content=None)
   
 # Твой токен
 client.run('токен')
