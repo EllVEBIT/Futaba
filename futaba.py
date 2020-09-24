@@ -11,8 +11,6 @@ import re
 import wikipedia
 import waifu
 import hello
-import json
-import meme
 import asyncio
 import json
 from time import strftime
@@ -130,7 +128,7 @@ async def mem(ctx):
  
   await ctx.send(embed=embed, content=None)
 
-# написать от лица бота (только дя админов)
+# написать от лица бота (только для админов)
 
 @client.command()
 @commands.has_permissions(administrator = True)
