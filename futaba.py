@@ -10,9 +10,13 @@ import datetime
 import re
 import wikipedia
 import waifu
-import meme
 import hello
 import json
+import meme
+import asyncio
+import json
+from time import strftime
+from bs4 import BeautifulSoup
 
 client = discord.Client()
 
@@ -24,6 +28,16 @@ async def on_ready():
 
     await client.change_presence( status = discord.Status.online, activity = discord.Game('f!main') )
 
+# ошибки
+
+@client.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.CommandNotFound):
+    await ctx.send('Такой команды нет, чтобы посмотреть список доступных команд введите f!main')
+    
+  if isinstance(error, commands.MissingPermissions):
+    await ctx.send('Данная команда доступна только Администраторам!')
+
 # меню
 
 @client.command()
@@ -33,14 +47,14 @@ async def main(ctx):
 	embed.add_field(name="fate", value="Твоя вайфу из серии Fate.", inline=False)
 	embed.add_field(name="info", value="Информация о любом пользователе на этом сервере.", inline=False)
 	embed.add_field(name="clear", value="Для Админов и модераторов. Удаляет сообшения максимум 100.", inline=False)
-	embed.add_field(name="wiki", value="поиск в wikipedia", inline=False)
-	embed.add_field(name="'none'", value="скоро", inline=False)
+	embed.add_field(name="wiki", value="Поиск в wikipedia", inline=False)
+	embed.add_field(name="mem", value="Разные мемы", inline=False)
 	embed.add_field(name="'none'", value="скоро", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="none", inline=False)
 	embed.add_field(name="'none'", value="скоро", inline=False)
-	embed.set_footer(text="Создатель @EvilBit#6696",icon_url='https://cdn.discordapp.com/avatars/552479599980970005/bd0258cf2634b8426c7e175c0ea97ab7.png?size=1024')
+	embed.set_footer(text="Создатель @Elin#6696",icon_url='https://cdn.discordapp.com/avatars/552479599980970005/bd0258cf2634b8426c7e175c0ea97ab7.png?size=1024')
 	await ctx.send(embed=embed)
 
 # информация о пользователе
@@ -59,11 +73,11 @@ async def info(ctx,member:discord.Member):
 
 @client.command()
 @commands.has_permissions(administrator = True)
-async def clear(ctx,amount=100):
+async def clear(ctx,amount=2000):
   deleted = await ctx.message.channel.purge(limit=amount +1)
   author = ctx.message.author
   await ctx.send(f'{ author.mention} удалил(а) несколько сообшений.')
-  
+
 # твоя вайфу из серий Fate
 
 @client.command()
@@ -76,7 +90,7 @@ async def fate(ctx):
   
   await ctx.send(content=None, embed=embed)
 
-# роль для новичков
+# приветсвие для участников
 
 @client.event
 async def on_member_join(member):
@@ -87,7 +101,9 @@ async def on_member_join(member):
   embed.set_image(url=hello.gifs[hi])
   
   await channel.send(embed=embed, content=None)
-  
+
+# wiki
+
 @client.command()
 async def wiki(ctx, *, text):
     wikipedia.set_lang("ru")
@@ -105,15 +121,22 @@ async def wiki(ctx, *, text):
 # мем
 
 @client.command()
-async def meme(ctx):
-  mem = random.randint(0, 2 )
+async def mem(ctx):
+  me = random.randint(0, 8 )
   
-  embed=discord.Embed(color=0xff80ff)
-  embed.set_image(url=meme.memeLinks[mem])
-  
-  await ctx.send(embed=embed, content=None)
+  embed=discord.Embed(timestamp=datetime.datetime.utcnow(), color=0xff80ff)
+  embed.set_image(url=meme.memesLinks[me])
+  embed.set_footer(text=f"Попросил(а): {ctx.author.name}")
  
-  await channel.send(embed=embed, content=None)
+  await ctx.send(embed=embed, content=None)
+
+# написать от лица бота (только дя админов)
+
+@client.command()
+@commands.has_permissions(administrator = True)
+async def say(ctx, *, msg):
+  await ctx.message.delete()
+  await ctx.send("{}" .format(msg))
   
 # Твой токен
 client.run('токен')
