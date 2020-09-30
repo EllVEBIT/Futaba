@@ -237,7 +237,7 @@ async def wallpaper(ctx):
             timestamp=datetime.datetime.utcnow(), color=0xff80ff)
     wallpaper = nekos.img("wallpaper")
     embed.set_image(url=wallpaper)
-    embed.set_footer(text=f"Попросил(а): {ctx.author.name}")
+    embed.set_footer(text=f"Попросил(а): {ctx.author.mention}")
     
     await ctx.send(embed=embed)
 
