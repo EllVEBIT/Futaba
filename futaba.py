@@ -101,6 +101,12 @@ async def clear(ctx,amount=2000):
 async def ping(ctx):
   await ctx.send(f"Пинг {round(client.latency * 1000)}ms")
 
+# калькулятор
+
+@сlient.command()
+async def calculator(ctx, operation):
+    await ctx.send(embed= discord.Embed(description = (f"Ответ: {eval(operation)}"), color=0xff80ff)
+
 # wiki
 
 @client.command()
