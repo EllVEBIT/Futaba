@@ -261,5 +261,7 @@ async def cum(ctx):
     
     await ctx.send(embed=embed)
  
+token = os.environ.get('BOT_TOKEN') 
+
 # Твой токен
-client.run('токен')
+client.run(str(token))
