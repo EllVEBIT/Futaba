@@ -6,6 +6,10 @@ Futaba написана на discord.py но она недоделанна, во
 
 ## Установка
 ```
+git clone https://github.com/EllVEBIT/Futaba
+```
+
+```
 $ pip3 install --user -r requirements.txt
 ```
 
