@@ -14,13 +14,9 @@ import hello
 import nekos
 import json
 import io
-import meme
-import asyncio
-import json
 from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
-import vk
 
 client = discord.Client()
 
