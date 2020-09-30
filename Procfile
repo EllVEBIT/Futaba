@@ -1,1 +1,1 @@
-worker: futaba.py
+worker: python futaba.py
