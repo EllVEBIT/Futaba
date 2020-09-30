@@ -6,7 +6,7 @@ Futaba написана на discord.py но она недоделанна, во
 
 ## Установка
 ```
-git clone https://github.com/EllVEBIT/Futaba
+$ git clone https://github.com/EllVEBIT/Futaba
 ```
 
 ```
