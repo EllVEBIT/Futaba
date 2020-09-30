@@ -105,8 +105,9 @@ async def ping(ctx):
 
 @сlient.command()
 async def calculator(ctx, operation):
-    embed= discord.Embed(description = (f"Ответ: {eval(operation)}"), color=0xff80ff)
-    await ctx.send(embed=embed)
+  embed = discord.Embed(description = (f"Ответ: {eval(operation)}"), color=0xff80ff)
+  
+  await ctx.send(embed=embed)
 
 # wiki
 
