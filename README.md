@@ -9,7 +9,7 @@ Futaba написана на discord.py но она недоделанна, во
 $ pip3 install --user -r requirements.txt
 ```
 
-Токен надо прописать в файле futaba.py
+Свой токен надо прописать в файле futaba.py
 
 Запуск:
 ```
