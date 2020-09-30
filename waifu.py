@@ -579,3 +579,4 @@ waifuLinks = ["https://static.zerochan.net/Saber.%28Fate.stay.night%29.full.1044
               "https://i.pinimg.com/originals/0b/b4/cf/0bb4cf555e9eb8e722e3707c2cb6fe77.jpg",
               "https://i.pinimg.com/originals/de/14/7f/de147fd368ca8af338d9396df3b5fe3f.png",
               "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/64b3e047-ba07-46d4-a5ba-46092f7ee1dc/dawjuy7-031b96e1-e55d-4707-a64b-a8d2c4d04656.jpg/v1/fill/w_197,h_400,q_70,strp/gorgon__fatego__by_darikaart_dawjuy7-400t.jpg"]
+###
