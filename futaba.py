@@ -10,7 +10,6 @@ import datetime
 import re
 import wikipedia
 import waifu
-import hello
 import nekos
 import json
 import io
