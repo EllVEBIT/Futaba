@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -21,6 +20,7 @@ import json
 from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
+import vk
 
 client = discord.Client()
 
@@ -37,12 +37,10 @@ async def on_ready():
 @client.event
 async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandNotFound):
-    await ctx.send('Такой команды нет, либо команда написанна неправильно. Чтобы посмотреть список доступных команд введите "f!main" ')
+    await ctx.send('Такой команды нет, либо команда написанна неправильно. Чтобы посмотреть список доступных команд введите```f!main```')
     
   if isinstance(error, commands.MissingPermissions):
     await ctx.send('Данная команда доступна только Администраторам!')
-
-# создатель
 
 @client.command()
 async def creator(ctx):
@@ -52,6 +50,7 @@ async def creator(ctx):
   embed.add_field(name="Создатель:", value='Elin#6696', inline=False)
   embed.add_field(name="Исходный код", value='https://github.com/EllVEBIT/Futaba', inline=False)
   embed.add_field(name="Контакты", value='https://vk.com/evilbitsd', inline=False)
+  embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/552479599980970005/bd0258cf2634b8426c7e175c0ea97ab7.webp?size=1024')
   
   await ctx.send(embed=embed)
 
@@ -86,6 +85,16 @@ async def info(ctx,member:discord.Member):
   emb.set_thumbnail(url=member.avatar_url)
   await ctx.send(embed = emb)
 
+# avatar пользователя любого  
+
+@client.command()
+async def avatar(ctx,member:discord.Member):
+  emb = discord.Embed(color=0xff80ff)
+  emb.set_image(url=member.avatar_url)
+  await ctx.send(embed = emb)
+
+# для Админов 
+###########################################
 # очистка сообшений для админов
 
 @client.command()
@@ -100,26 +109,6 @@ async def clear(ctx,amount=2000):
 @client.command()
 async def ping(ctx):
   await ctx.send(f"Пинг {round(client.latency * 1000)}ms")
-
-# приветсвие для участников
-
-@client.event
-async def on_member_join(member):
-    print(f'{member} has joined')
-    embed = discord.Embed(
-        title='Hello there!',
-        description=f'thanks for joining {member}! have a good time,\
-        and dont forget to follow the rules! to be able to chat, \
-        please type ```+verify``` in the #verify-me channel',
-        colour=discord.Colour.blurple()
-    )
-    channel = discord.utils.get(member.guild.channels, name="┊❀log")
-    bruh = member.avatar_url
-
-    embed.set_image(url=bruh)
-
-    await member.send(embed=embed)
-    await channel.send(embed=embed)
 
 # wiki
 
@@ -136,7 +125,7 @@ async def wiki(ctx, *, text):
     emb.set_author(name= 'Wikipedia', url= new_page.url, icon_url= 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png')
  
     await ctx.send(embed=emb)
-  
+
 # мем
 
 @client.command()
@@ -275,6 +264,6 @@ async def cum(ctx):
     embed.set_footer(text=f"Попросил(а): {ctx.author.name}")
     
     await ctx.send(embed=embed)
-
+ 
 # Твой токен
 client.run('токен')
