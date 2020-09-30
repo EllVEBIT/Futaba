@@ -56,16 +56,10 @@ async def creator(ctx):
 async def main(ctx):
 	embed=discord.Embed(title="Основные команды", description="Префикс f!", color=0xff80ff)
 	embed.set_author(name=f'{ctx.author.display_name}', icon_url=f'{ctx.author.avatar_url}')
-	embed.add_field(name="fate", value="Твоя вайфу из серии Fate.", inline=False)
-	embed.add_field(name="info", value="Информация о любом пользователе на этом сервере.", inline=False)
-	embed.add_field(name="clear", value="Для Админов и модераторов. Удаляет сообшения максимум 100.", inline=False)
-	embed.add_field(name="wiki", value="Поиск в wikipedia", inline=False)
-	embed.add_field(name="mem", value="Разные мемы", inline=False)
-	embed.add_field(name="'none'", value="скоро", inline=False)
-	embed.add_field(name="'none'", value="none", inline=False)
-	embed.add_field(name="'none'", value="none", inline=False)
-	embed.add_field(name="'none'", value="none", inline=False)
-	embed.add_field(name="'none'", value="скоро", inline=False)
+	embed.add_field(name="Fun", value="info, fate, neko_gif, kiss, avatar, feed", inline=False)
+	embed.add_field(name="Admin", value="clear, say", inline=False)
+	embed.add_field(name="NSFW", value="wallpaper, erokemo, cum", inline=False)
+	embed.add_field(name="System", value="creator, ping", inline=False)
 	embed.set_footer(text="Создатель @Elin#6696",icon_url='https://cdn.discordapp.com/avatars/552479599980970005/bd0258cf2634b8426c7e175c0ea97ab7.png?size=1024')
 	await ctx.send(embed=embed)
 
@@ -121,18 +115,6 @@ async def wiki(ctx, *, text):
     emb.set_author(name= 'Wikipedia', url= new_page.url, icon_url= 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png')
  
     await ctx.send(embed=emb)
-
-# мем
-
-@client.command()
-async def mem(ctx):
-  me = random.randint(0, 8 )
-  
-  embed=discord.Embed(timestamp=datetime.datetime.utcnow(), color=0xff80ff)
-  embed.set_image(url=meme.memesLinks[me])
-  embed.set_footer(text=f"Попросил(а): {ctx.author.name}")
- 
-  await ctx.send(embed=embed, content=None)
 
 # написать от лица бота (только дя админов)
 
