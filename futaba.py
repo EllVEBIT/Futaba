@@ -17,8 +17,6 @@ import io
 from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
-import colorama
-from colorama import Fore, Back, Style
 
 client = discord.Client()
 
@@ -39,25 +37,6 @@ async def on_command_error(ctx, error):
     
   if isinstance(error, commands.MissingPermissions):
     await ctx.send('Данная команда доступна только Администраторам!')
-
-@client.event
-async def on_message(message):
-    with io.open("logchats.txt", "a", encoding="utf-8") as f:
-        f.write(
-            "[{}] | [{}] | [{}] @ {}: {}\n".format(message.guild,
-                                                   message.channel,
-                                                   message.author,
-                                                   message.created_at,
-                                                   message.content))
-    f.close()
-    print(
-        Fore.WHITE + "[" + Fore.LIGHTRED_EX + '+' + Fore.WHITE + "]"
-        + Fore.LIGHTRED_EX + "[{}] | [{}] | [{}] @ {}: {}".format(
-            message.guild, message.channel, message.author,
-            message.created_at, message.content))
-
-    await client.process_commands(message)
-
 
 @client.command()
 async def creator(ctx):
