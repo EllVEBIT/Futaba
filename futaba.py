@@ -243,6 +243,33 @@ async def cum(ctx):
     embed.set_footer(text=f"Попросил(а): {ctx.author.name}")
     
     await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+async def uptime(self, ctx):
+		"""How long have I been up/online?"""
+		seconds = time.time() - start_time
+		m, s = divmod(seconds, 60)
+		h, m = divmod(m, 60)
+		d, h = divmod(h, 24)
+		w, d = divmod(d, 7)
+		if s != 0:
+			msg = '**{0}** seconds{1}.'.format(int(s), ' :frowning:' if m == 0 else '')
+		if m != 0:
+			e = ' :slight_frown:.' if h == 0 else '.'
+			msg = ' : **{0}** minutes : '.format(int(m)) + msg.replace('.', '') + e
+		if h != 0:
+			e = ' :slight_smile:.' if d == 0 else '.'
+			msg = ' : **{0}** hours'.format(int(h)) + msg.replace('.', '') + e
+		if d != 0:
+			e = ' :smiley:.' if w == 0 else '.'
+			msg = ' : **{0}** days'.format(int(d)) + msg.replace('.', '').replace(':slight_smile:', '') + e
+		if w != 0:
+			msg = ' : **{0}** weeks {1}'.format(int(w)) + msg.replace('.', '') + ' :joy: :joy: :joy: :joy: :joy: :joy: :joy: :joy: :joy: :joy:.'
+		if m == 0:
+			msg = ' '+msg
+		else:
+			msg = msg[2:]
+		await self.bot.say(":clock4: Online for{0}".format(msg))
  
 token = os.environ.get('BOT_TOKEN') 
 
