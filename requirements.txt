@@ -1,4 +1,4 @@
 discord.py
 wikipedia
 nekos.py
-clorama
+colorama
