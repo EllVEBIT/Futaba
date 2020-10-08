@@ -78,6 +78,7 @@ async def info(ctx,member:discord.Member):
 
 # avatar пользователя любого  
 
+@client.command()
 async def avatar(ctx,member:discord.Member):
    emb = discord.Embed()
    emb.set_image(url=member.avatar_url)
