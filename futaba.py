@@ -79,10 +79,11 @@ async def info(ctx,member:discord.Member):
 # avatar пользователя любого  
 
 @client.command()
-async def avatar(ctx,member:discord.Member):
-  emb = discord.Embed(color=0xff80ff)
-  emb.set_image(url=member.avatar_url)
-  await ctx.send(embed = emb)
+async def avatar(self, ctx, *users:discord.User):
+  if len(users) == 0:
+    users = [ctx.message.author]
+    for user in users:
+      await self.bot.say("Аватар `{0}`' {1}".format(user, user.avatar_url))
 
 # для Админов 
 ###########################################
