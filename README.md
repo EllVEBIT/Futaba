@@ -1,5 +1,5 @@
 # Futaba
-![picture of futaba](https://comiczone.ru/wp-content/uploads/2019/09/a4c0e2142d406625863bb12d0030d297fff3014f.png)
+![picture of futaba](https://i.pinimg.com/originals/6f/99/58/6f9958d10634838a8e96100efcb0eb67.jpg)
 
 ## Информация
 Futaba это бот написаная на discord.py но она недоделанна, возможно я когда-то доделаю ее. На данный момент буду по тихоньку ее делать
