@@ -30,7 +30,7 @@ async def on_ready():
 
 @tasks.loop(seconds=10)
 async def change_status():
-    await client.change_presence(activity=discord.Game(choice(status)))
+    await client.change_presence(activity=discord.Streaming(choice(status)))
 
 # ошибки и сообшения
 @client.event
