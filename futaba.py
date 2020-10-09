@@ -14,6 +14,7 @@ import waifu
 import nekos
 import json
 import io
+from random import choice
 from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
