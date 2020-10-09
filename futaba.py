@@ -18,18 +18,19 @@ from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
 
-client = discord.Client()
-
 client = commands.Bot( command_prefix = 'f!')
+
+status = ['f!main', 'Версия 0.0.1', 'Хостинг Heroku']
 
 @client.event
 async def on_ready():
     print('вы вошли в систему как {0.user}'.format(client))
 
-    await client.change_presence( status = discord.Status.online, activity = discord.Game('f!main') )
+@tasks.loop(seconds=10)
+async def change_status():
+    await client.change_presence(activity=discord.Game(choice(status)))
 
-# ошибки и собшения
-
+# ошибки и сообшения
 @client.event
 async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandNotFound):
