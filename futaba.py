@@ -24,6 +24,7 @@ status = ['f!main', 'Версия 0.0.1', 'Хостинг Heroku']
 
 @client.event
 async def on_ready():
+    change_status.start()
     print('вы вошли в систему как {0.user}'.format(client))
 
 @tasks.loop(seconds=10)
