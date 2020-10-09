@@ -21,7 +21,7 @@ from discord.ext.commands import has_permissions, CheckFailure
 
 client = commands.Bot( command_prefix = 'f!')
 
-status = ['f!main', 'Версия 0.0.1', 'Хостинг Heroku']
+status = ['f!main', 'Версия 0.0.1', 'Хостинг от Heroku']
 
 @client.event
 async def on_ready():
@@ -30,7 +30,7 @@ async def on_ready():
 
 @tasks.loop(seconds=10)
 async def change_status():
-    await client.change_presence(activity=discord.Streaming(choice(status)))
+    await client.change_presence(activity=discord.Game(choice(status)))
 
 # ошибки и сообшения
 @client.event
