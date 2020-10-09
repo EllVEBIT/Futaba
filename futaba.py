@@ -70,25 +70,14 @@ async def main(ctx):
 # информация о пользователе
 
 @client.command()
-@commands.guild_only()
-    async def user(self, ctx, *, user: discord.Member = None):
-        """ Get user information """
-        user = user or ctx.author
-
-        show_roles = ', '.join(
-            [f"<@&{x.id}>" for x in sorted(user.roles, key=lambda x: x.position, reverse=True) if x.id != ctx.guild.default_role.id]
-        ) if len(user.roles) > 1 else 'None'
-
-        embed = discord.Embed(colour=user.top_role.colour.value)
-        embed.set_thumbnail(url=user.avatar_url)
-
-        embed.add_field(name="Full name", value=user, inline=True)
-        embed.add_field(name="Nickname", value=user.nick if hasattr(user, "nick") else "None", inline=True)
-        embed.add_field(name="Account created", value=default.date(user.created_at), inline=True)
-        embed.add_field(name="Joined this server", value=default.date(user.joined_at), inline=True)
-        embed.add_field(name="Roles", value=show_roles, inline=False)
-
-        await ctx.send(content=f"ℹ About **{user.id}**", embed=embed)
+async def info(ctx,member:discord.Member):
+  emb = discord.Embed(title='Информация о пользователе',color=0xff80ff)
+  emb.add_field(name="Когда присоединился:",value=member.joined_at,inline=False)
+  emb.add_field(name="Никнейм:",value=member.display_name,inline=False)
+  emb.add_field(name="ID",value=member.id,inline= False)
+  emb.add_field(name="Аккаунт был создан:",value=member.created_at.strftime("%#d %B %Y  %I:%M %p"),inline=False)
+  emb.set_thumbnail(url=member.avatar_url)
+  await ctx.send(embed = emb)
 
 # avatar пользователя любого  
 
