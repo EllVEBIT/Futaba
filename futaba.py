@@ -71,6 +71,8 @@ async def main(ctx):
 
 @client.command()
 async def info(ctx,member:discord.Member):
+  show_roles = ', '.join([f"<@&{x.id}>" for x in sorted(user.roles, key=lambda x: x.position, reverse=True) if x.id != ctx.guild.default_role.id]) if len(user.roles) > 1 else 'None'
+
   emb = discord.Embed(title='Информация о пользователе',color=0xff80ff)
   emb.add_field(name="Когда присоединился:",value=member.joined_at,inline=False)
   emb.add_field(name="Никнейм:",value=member.display_name,inline=False)
