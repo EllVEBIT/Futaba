@@ -76,7 +76,7 @@ async def info(ctx,member:discord.Member):
   emb.add_field(name="Никнейм:",value=member.display_name,inline=False)
   emb.add_field(name="ID",value=member.id,inline= False)
   emb.add_field(name="Аккаунт был создан:",value=member.created_at.strftime("%#d %B %Y  %I:%M %p"),inline=False)
-  emb.add_field(name="Роли", value=member.show_roles, inline=False)
+  emb.add_field(name="Роли", value=show_roles, inline=False)
   emb.set_thumbnail(url=member.avatar_url)
   await ctx.send(embed = emb)
 
