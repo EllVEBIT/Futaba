@@ -70,6 +70,7 @@ async def main(ctx):
 # информация о пользователе
 
 @client.command()
+@commands.guild_only()
 async def info(ctx,member:discord.Member):
   show_roles = ', '.join([f"<@&{x.id}>" for x in sorted(user.roles, key=lambda x: x.position, reverse=True) if x.id != ctx.guild.default_role.id]) if len(user.roles) > 1 else 'None'
 
