@@ -123,7 +123,7 @@ async def wiki(ctx, *, text):
 # написать от лица бота (только owner)
 
 @client.command()
-@commands.has_permissions(owner = True)
+@commands.has_permissions(owner_id = True)
 async def say(ctx, *, msg):
   await ctx.message.delete()
   await ctx.send("{}" .format(msg))
