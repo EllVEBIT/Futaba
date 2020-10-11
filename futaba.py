@@ -19,7 +19,7 @@ from time import strftime
 from bs4 import BeautifulSoup
 from discord.ext.commands import has_permissions, CheckFailure
 
-client = commands.Bot( command_prefix = 'f!')
+client = commands.Bot( command_prefix = 'f!', owner_id=552479599980970005)
 
 status = ['f!main', 'Версия 0.0.1', 'Хостинг от Heroku']
 
@@ -122,11 +122,8 @@ async def wiki(ctx, *, text):
 
 # написать от лица бота (только owner)
 
-def owner(ctx):
-    return ctx.message.author.id == "552479599980970005" 
-
 @client.command()
-@commands.check(owner)
+@commands.is_owner()
 async def say(ctx, *, msg):
   await ctx.message.delete()
   await ctx.send("{}" .format(msg))
