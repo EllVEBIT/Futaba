@@ -56,7 +56,7 @@ async def creator(ctx):
 
 # меню
 
-client.command()
+@client.command()
 async def role(ctx):
   user = ctx.message.author
   role = discord.utils.get(user.server.roles, name="Hyperion")
