@@ -33,13 +33,6 @@ async def change_status():
     await client.change_presence(activity=discord.Game(choice(status)))
 
 # ошибки и сообшения
-@client.event
-async def on_command_error(ctx, error):
-  if isinstance(error, commands.CommandNotFound):
-    await ctx.send('Такой команды нет, либо команда написанна неправильно. Чтобы посмотреть список доступных команд введите```f!main```')
-    
-  if isinstance(error, commands.MissingPermissions):
-    await ctx.send('Данная команда доступна только Администраторам!')
 
 @client.command()
 async def creator(ctx):
