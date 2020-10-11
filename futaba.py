@@ -34,6 +34,17 @@ async def change_status():
 
 # ошибки и сообшения
 
+@client.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.CommandNotFound):
+    await ctx.send('Такой команды нет, либо команда написанна неправильно. Чтобы посмотреть список доступных команд введите```f!main```')
+    
+  if isinstance(error, commands.MissingPermissions):
+    await ctx.send('Данная команда доступна только Администраторам!')
+  
+  if isinstance(error, commands.NotOwner):
+    await ctx.send('Данная команда доступна только owner!')
+
 @client.command()
 async def creator(ctx):
   author = ctx.message.author
