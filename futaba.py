@@ -56,6 +56,12 @@ async def creator(ctx):
 
 # меню
 
+client.command()
+async def role(ctx)
+user = ctx.message.author
+role = discord.utils.get(user.server.roles, name="Hyperion")
+await client.add_roles(user, role
+
 @client.command()
 async def main(ctx):
 	embed=discord.Embed(title="Основные команды", description="Префикс f!", color=0xff80ff)
