@@ -54,7 +54,7 @@ async def creator(ctx):
   embed.add_field(name="Исходный код", value='https://github.com/EllVEBIT/Futaba', inline=False)
   embed.add_field(name="Добавить к себе", value='https://discord.com/oauth2/authorize?client_id=737318737887232111&scope=bot&permissions=8', inline=False)
   embed.add_field(name="Контакты", value='https://vk.com/evilbitsd', inline=False)
-  embed.set_thumbnail(url=https://cdn.discordapp.com/avatars/552479599980970005/9b1fb0ef0727fc6bd8a31cc04d5c0d9d.png?size=1024') 
+  embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/552479599980970005/9b1fb0ef0727fc6bd8a31cc04d5c0d9d.png?size=1024') 
   await ctx.send(embed=embed)
 
 # меню
