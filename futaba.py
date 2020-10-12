@@ -21,7 +21,7 @@ from discord.ext.commands import has_permissions, CheckFailure
 
 client = commands.Bot( command_prefix = 'f!', owner_id=552479599980970005)
 
-status = ['f!main', 'Версия 0.0.1', 'Хостинг от Heroku']
+status = ['Пиши f!main', 'Версия бота 0.0.1', 'Хостинг от Heroku']
 
 @client.event
 async def on_ready():
