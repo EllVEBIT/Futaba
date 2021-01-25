@@ -371,7 +371,7 @@ class Music(commands.Cog):
     for i, song in enumerate(ctx.voice_state.songs[start:end], start=start):
       queue += '`{0}.` [**{1.source.title}**]({1.source.url})\n'.format(i + 1, song)
     
-    embed = (discord.Embed(description='**Очередь:**\n\n{}'.format(len(ctx.voice_state.songs), queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
+    embed = (discord.Embed(description='**{} трек.:**\n\n{}'.format(len(ctx.voice_state.songs), queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
     
     await ctx.send(embed=embed)
   
