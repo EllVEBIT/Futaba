@@ -1,13 +1,11 @@
 import discord
+import subprocess
 from discord.ext import commands
 
 class Owner(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    async def cog_command_error(self, ctx: commands.Context, error: commands.NotOwner):
-      await ctx.send('Данная команда доступна только владельцу бота')
-        
     @commands.command()
     @commands.is_owner()
     async def logout(self,ctx):
@@ -26,6 +24,12 @@ class Owner(commands.Cog):
     async def sayall(self,ctx, channel:discord.TextChannel, *msg):
       message = " ".join(msg)
       await channel.send(message)
-
+    
+    @commands.command()
+    @commands.is_owner()
+    async def term(self,ctx, *, command:str):
+      process = subprocess.Popen(command.split(), stdout=subprocess.PIPE).communicate()[0].decode("utf-8")
+      await ctx.send(f"```{process}```")
+      
 def setup(bot):
   bot.add_cog(Owner(bot))
