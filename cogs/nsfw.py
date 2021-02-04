@@ -7,7 +7,7 @@ class NSFW(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
+    @commands.command(pass_context=True, aliases=['r34','34'])
     async def rule34(self, ctx, *, tags:str):
       if not ctx.channel.is_nsfw():
         await ctx.send("Такие штучки работают только в NSFW каналах!")
@@ -29,9 +29,9 @@ class NSFW(commands.Cog):
           images.append("http://img.rule34.xxx/images/{}/{}".format(image["directory"], image["image"]))
           result = "".join(images)
         
-        embed=discord.Embed(color=discord.Color.dark_red())
+        embed=discord.Embed(color=discord.Color.dark_red(),title="Rule34: {}".format(tags),description=f"[Нет изображения, нажми сюда]({result})")
         embed.set_image(url=result)
-        embed.set_footer(text="теги: {}".format(image['tags']))
+        embed.set_footer(text="Теги: {}".format(image['tags']))
         await ctx.send(embed=embed)
         
 def setup(bot):
