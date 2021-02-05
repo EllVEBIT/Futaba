@@ -1,0 +1,1 @@
+heroku buildpacks:add https://github.com/veeraya/heroku-buildpack-ffmpeg-latest.git
