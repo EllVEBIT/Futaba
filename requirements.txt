@@ -3,4 +3,3 @@ psutil
 youtube_dl
 PyNaCl
 functools
-itertools
