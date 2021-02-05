@@ -4,3 +4,4 @@ youtube_dl
 PyNaCl
 requests
 ffmpeg
+discord.py[voice] 
