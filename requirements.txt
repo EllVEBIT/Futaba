@@ -3,3 +3,4 @@ psutil
 youtube_dl
 PyNaCl
 requests
+ffmpeg
