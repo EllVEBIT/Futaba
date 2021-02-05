@@ -2,4 +2,3 @@ discord.py
 psutil
 youtube_dl
 PyNaCl
-functools
