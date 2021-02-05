@@ -33,5 +33,7 @@ async def on_ready():
 async def change_status():
     await bot.change_presence(activity=discord.Game(choice(config['status'])))
 
+TOKEN = os.getenv("DISCORD_TOKEN")
+
 if __name__ == '__main__':
-  bot.run(config['token'])
+  bot.run(TOKEN)
