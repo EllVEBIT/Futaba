@@ -33,6 +33,10 @@ async def on_ready():
 async def change_status():
     await bot.change_presence(activity=discord.Game(choice(config['status'])))
 
+@bot.event
+async def on_command_error(ctx: commands.Context, error: commands.CommandError):
+  await ctx.send('Ошибка: ```{}```'.format(str(error)))
+
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 if __name__ == '__main__':
