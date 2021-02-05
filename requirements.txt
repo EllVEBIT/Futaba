@@ -1,0 +1,7 @@
+discord.py
+psutil
+youtube_dl
+PyNaCl
+math
+functools
+itertools
