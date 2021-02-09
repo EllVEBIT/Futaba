@@ -28,7 +28,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
   YTDL_OPTIONS = {
     'format': 'bestaudio/best',
     'extractaudio': True,
-    'audioformat': ['mp4','mp3'],
     'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
@@ -340,7 +339,7 @@ class Music(commands.Cog):
     for i, song in enumerate(ctx.voice_state.songs[start:end], start=start):
       queue += '`{0}.` [**{1.source.title}**]({1.source.url})\n'.format(i + 1, song)
     
-    embed = (discord.Embed(description='{} в очереди:\n\n{}'.format(len(ctx.voice_state.songs), queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
+    embed = (discord.Embed(title='Очередь:',description='\n\n{}'.format(queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
     
     await ctx.send(embed=embed)
 
@@ -357,13 +356,19 @@ class Music(commands.Cog):
     if not ctx.voice_state.voice:
       await ctx.invoke(self._join)
     
+    await ctx.message.add_reaction('\N{HOURGLASS}')
+    
     async with ctx.typing():
       try:
         source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
       except YTDLError as e:
+        await ctx.message.remove_reaction('\N{HOURGLASS}', ctx.me)
+        await ctx.message.add_reaction('❌')
         await ctx.send('Произошла ошибка при обработке этого запроса: {}'.format(str(e)))
       else:
         song = Song(source)
+        await ctx.message.remove_reaction('\N{HOURGLASS}', ctx.me)
+        await ctx.message.add_reaction('✅')
         await ctx.voice_state.songs.put(song)
         await ctx.send('Добавленна в очередь {}'.format(str(source)))
   
