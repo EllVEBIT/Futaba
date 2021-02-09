@@ -28,7 +28,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
   YTDL_OPTIONS = {
     'format': 'bestaudio/best',
     'extractaudio': True,
-    'audioformat': 'mp3',
+    'audioformat': ['mp4','mp3'],
     'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
     'restrictfilenames': True,
     'noplaylist': True,
@@ -158,10 +158,7 @@ class SongQueue(asyncio.Queue):
   
   def clear(self):
     self._queue.clear()
-  
-  def shuffle(self):
-    random.shuffle(self._queue)
-  
+
   def remove(self, index: int):
     del self._queue[index]
   
@@ -264,25 +261,9 @@ class Music(commands.Cog):
   async def cog_before_invoke(self, ctx: commands.Context):
     ctx.voice_state = self.get_voice_state(ctx)
   
-  async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
-    await ctx.send('Ошибка: {}'.format(str(error)))
-  
   @commands.command(name='join', invoke_without_subcommand=True)
   async def _join(self, ctx: commands.Context):
     destination = ctx.author.voice.channel
-    if ctx.voice_state.voice:
-      await ctx.voice_state.voice.move_to(destination)
-      return
-    
-    ctx.voice_state.voice = await destination.connect()
-  
-  @commands.command(name='summon')
-  @commands.has_permissions(manage_guild=True)
-  async def _summon(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
-    if not channel and not ctx.author.voice:
-      raise VoiceError('Вы не подключены к голосовому каналу и не указали канал для присоединения')
-    
-    destination = channel or ctx.author.voice.channel
     if ctx.voice_state.voice:
       await ctx.voice_state.voice.move_to(destination)
       return
@@ -334,27 +315,15 @@ class Music(commands.Cog):
     ctx.voice_state.songs.clear()
     
     ctx.voice_state.voice.stop()
+    
     await ctx.message.add_reaction('⏹️')
   
   @commands.command(name='skip')
   async def _skip(self, ctx: commands.Context):
     if not ctx.voice_state.is_playing:
       return await ctx.send('Я сейчас не играю музыку...')
-    voter = ctx.message.author
-    if voter == ctx.voice_state.current.requester:
-      await ctx.message.add_reaction('⏭️')
-      ctx.voice_state.skip()
-    
-    elif voter.id not in ctx.voice_state.skip_votes:
-      ctx.voice_state.skip_votes.add(voter.id)
-      total_votes = len(ctx.voice_state.skip_votes)
-      if total_votes >= 3:
-        await ctx.message.add_reaction('⏭️')
-        ctx.voice_state.skip()
-      else:
-        await ctx.send('Значение пропустить установленно, сейчас на **{}/3**'.format(total_votes))
-    else:
-      await ctx.send('Вы уже проголосовали за то, чтобы пропустить эту песню.')
+    ctx.voice_state.skip()
+    await ctx.message.add_reaction('⏭️')
   
   @commands.command(name='queue')
   async def _queue(self, ctx: commands.Context, *, page: int = 1):
@@ -371,19 +340,10 @@ class Music(commands.Cog):
     for i, song in enumerate(ctx.voice_state.songs[start:end], start=start):
       queue += '`{0}.` [**{1.source.title}**]({1.source.url})\n'.format(i + 1, song)
     
-    embed = (discord.Embed(description='**{} трек.:**\n\n{}'.format(len(ctx.voice_state.songs), queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
+    embed = (discord.Embed(description='{} в очереди:\n\n{}'.format(len(ctx.voice_state.songs), queue),color=discord.Color.dark_red()).set_footer(text='Просмотр страницы {}/{}'.format(page, pages)))
     
     await ctx.send(embed=embed)
-  
-  @commands.command(name='shuffle')
-  async def _shuffle(self, ctx: commands.Context):
-    
-    if len(ctx.voice_state.songs) == 0:
-      return await ctx.send('Очередь пустая. ')
-    
-    ctx.voice_state.songs.shuffle()
-    await ctx.message.add_reaction('🔀')
-  
+
   @commands.command(name='remove')
   async def _remove(self, ctx: commands.Context, index: int):
     if len(ctx.voice_state.songs) == 0:
@@ -391,14 +351,6 @@ class Music(commands.Cog):
     
     ctx.voice_state.songs.remove(index - 1)
     await ctx.message.add_reaction('✖️')
-  
-  @commands.command(name='loop')
-  async def _loop(self, ctx: commands.Context):
-    if not ctx.voice_state.is_playing:
-      return await ctx.send('В данный момент ничего не воспроизводится.')
-    
-    ctx.voice_state.loop = not ctx.voice_state.loop
-    await ctx.message.add_reaction('🔁')
   
   @commands.command(name='play')
   async def _play(self, ctx: commands.Context, *, search: str):
